@@ -9,37 +9,36 @@ function VizScatterPlot( divId )
 	// initialize some stuff
 
 	// define some d3js stuff here
-};
 
-l = []
-//VizScatterPlot.prototype.draw = function( data, labels ) 
-VizScatterPlot.prototype.draw = function( data )
-{
-	// call d3js stuff here
-	document.write("ooooooo")
-	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+
+
+
+
+    // call d3js stuff here
+    //document.write("ooooooo")
+    var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right, 
     height = 500 - margin.top - margin.bottom;
 
 
-	var width = 200;
+    var width = 200;
     var height = 200;
     
-    var container = this.m_divId
+    var container = this.m_divId;
     //var container = options.container;
     //var legend = options.legend;
     //var model  = options.model;
     //var count  = options.count;
 
-    var xExtent = d3.extent(data, function(d) { return d[0] });
-    var yExtent = d3.extent(data, function(d) { return d[1] });
-    var xRange = xExtent[1] - xExtent[0];
-    var yRange = yExtent[1] - yExtent[0];
+    //var xExtent = d3.extent(data, function(d) { return d[0] });
+    //var yExtent = d3.extent(data, function(d) { return d[1] });
+    var xRange = 6;//xExtent[1] - xExtent[0];
+    var yRange = 6;//yExtent[1] - yExtent[0];
 
 
 
 
-    var svg = d3.select(container).append("svg")
+    this.m_svg = d3.select(container).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -53,12 +52,15 @@ VizScatterPlot.prototype.draw = function( data )
 
 
     var x = d3.scale.linear()
-        .domain([xExtent[0] - xRange*0.1, xExtent[1] + xRange*0.1])
+        .domain([-3, 3])
         .range([0, width]);
 
     var y = d3.scale.linear()
-        .domain([yExtent[0] - yRange*0.1, yExtent[1] + yRange*0.1])
+        .domain([-3, 3])
         .range([height, 0]);
+
+    this.m_x = x;
+    this.m_y = y;
 
     var color = d3.scale.category10();
     var colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
@@ -70,6 +72,7 @@ VizScatterPlot.prototype.draw = function( data )
         .scale(y)
         .orient("left");
 
+    this.m_colores_g = colores_g;
 
     // Lasso functions to execute while lassoing
     var lasso_start = function() {
@@ -115,7 +118,7 @@ VizScatterPlot.prototype.draw = function( data )
     };
 
     // Create the area where the lasso event can be triggered
-    var lasso_area = svg.append("rect")
+    var lasso_area = this.m_svg.append("rect")
                       .attr("width",width)
                       .attr("height",height)
                       .style("opacity",0);
@@ -134,7 +137,7 @@ VizScatterPlot.prototype.draw = function( data )
     
 
 
-    svg.append("g")
+    this.m_svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
@@ -146,7 +149,7 @@ VizScatterPlot.prototype.draw = function( data )
         //.text("Sepal Width (cm)")
         ;
 
-    svg.append("g")
+    this.m_svg.append("g")
         .attr("class", "y axis")
         .call(yAxis)
         .append("text")
@@ -159,19 +162,39 @@ VizScatterPlot.prototype.draw = function( data )
 
 
 
-    svg.selectAll(".dot")
+        this.m_dirtyCount = 0;
+
+
+
+
+};
+
+VizScatterPlot.prototype.onResizeAxisX = function( minX, maxX ) 
+{
+    // selectiona el attribute del svg que maneja la escala
+};
+
+l = []
+//VizScatterPlot.prototype.draw = function( data, labels ) 
+VizScatterPlot.prototype.draw = function( data )
+{
+    var self = this;
+
+    this.m_svg.selectAll(".dot")
         .data(data)
         .enter().append("circle")
-        .attr("id",function(d,i) { return "dot_" + i;}) // added
+        .attr("id",function(d,i) { return "dot_" + ( i + self.m_dirtyCount );}) // added
         .attr("class", "dot")
         .attr("r", 3.5)
-        .attr("cx", function(d) { return x(d[0]); })
-        .attr("cy", function(d) { return y(d[1]); })
-        .style("fill", function(d) {  return colores_g[d[2] ]; });
+        .attr("cx", function(d) { return self.m_x(d[0]); })
+        .attr("cy", function(d) { return self.m_y(d[1]); })
+        .style("fill", 
+                function(d) {  
+                    return self.m_colores_g[d[2] ]; 
+                });
 
-    svg.call(lasso);
-    lasso.items(d3.selectAll(".dot"));
-
-
+    self.m_dirtyCount += 10000;
+    //this.m_svg.call(lasso);
+    //lasso.items(d3.selectAll(".dot"));
 
 };

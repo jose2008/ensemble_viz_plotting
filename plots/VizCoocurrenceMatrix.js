@@ -29,12 +29,12 @@ VizCoocurrenceMatrix.prototype.draw = function( data )
 		.attr("width",width)
 		.attr("height",height);
 		//append circle
-		document.write("before...")
+		//document.write("before...")
 		for(i=0; i<data.length; i++){
 			for(j=0; j<data.length; j++){
 				if(data[i][j] == 1) c = 1;
 				else c=0
-				document.write(data.length)
+				//document.write(data.length)
 				svg.append("rect")
 				.attr("x",1*j)
 				.attr("y",1*i)
