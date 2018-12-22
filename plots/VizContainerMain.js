@@ -1,7 +1,8 @@
-function VizContainer( divContainer, params )
+function VizContainerMain( divContainer, params )
 {
 	// create sub containers
-	
+
+	document.write(divContainer);
 	this.m_divContainer = divContainer;
 
 	this.fieldset= document.createElement('fieldset');
@@ -9,6 +10,7 @@ function VizContainer( divContainer, params )
 	//this.legend.text = "dddss";
 	var node = document.createTextNode(params['modelType']);
 	this.legend.appendChild(node);	
+
 	//var this.x = document.createElement("LEGEND");
 	//var t = document.createTextNode("Personalia:");
 	//this.x.appendChild(t);
@@ -68,7 +70,9 @@ function VizContainer( divContainer, params )
 	this.fieldset.appendChild(this.m_divMetric);
 	//this.m_divContainer.appendChild( this.m_divMetric );
 
-	document.write(divContainer);
+	//console.log("ensambleeeeeeeeeee");
+	//console.log(APPLICATION_DATA['modelContainers'][0].getCurrentLabels());
+
 
 
 	this.m_vizScatter = new VizScatterPlot( this.m_divScatter, {} );
@@ -91,17 +95,17 @@ function VizContainer( divContainer, params )
 
 };
 
-VizContainer.prototype.getVizScatter = function() 
+VizContainerMain.prototype.getVizScatter = function() 
 {
     return this.m_vizScatter;
 };
 
-VizContainer.prototype.getVizMatrix = function() 
+VizContainerMain.prototype.getVizMatrix = function() 
 {
     return this.m_vizMatrix;
 };
 
-VizContainer.prototype.getVizMetric = function() 
+VizContainerMain.prototype.getVizMetric = function() 
 {
     return this.m_vizMetric;
 };
@@ -109,18 +113,18 @@ VizContainer.prototype.getVizMetric = function()
 
 
 
-VizContainer.prototype.setCurrentLabels = function(labels) 
+VizContainerMain.prototype.setCurrentLabels = function(labels) 
 {
     this.m_currentLabels = labels;
 };
 
-VizContainer.prototype.getCurrentLabels = function() 
+VizContainerMain.prototype.getCurrentLabels = function() 
 {
     return this.m_currentLabels;
 };
 
 
-VizContainer.prototype.draw = function(params) 
+VizContainerMain.prototype.draw = function(params) 
 {
 	var _dataScatter 	= params['dataScatter'];
 	var _dataMatrix 	= params['dataMatrix'];

@@ -4,6 +4,25 @@ function VizCoocurrenceMatrix(divId)
 
 	this.m_divId = divId;
 
+		//container = options.container;
+	//data = options.data;
+	var width  = 300;
+	var height = 300;
+
+	container = this.m_divId;
+
+	this.colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+
+
+	//create svg element
+	this.svg = d3.select(container)
+		.append("svg")
+		.attr("width",width)
+		.attr("height",height);
+
+
+
+
 
 };
 
@@ -12,22 +31,8 @@ function VizCoocurrenceMatrix(divId)
 VizCoocurrenceMatrix.prototype.draw = function( data ) 
 {
 	
-	//container = options.container;
-	//data = options.data;
-	var width  = 300;
-	var height = 300;
 
-	container = this.m_divId;
-
-	var colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
-
-
-	//create svg element
-	var svg = d3.select(container)
-		.append("svg")
-		.data(data)
-		.attr("width",width)
-		.attr("height",height);
+		this.svg.data(data);
 		//append circle
 		//document.write("before...")
 		for(i=0; i<data.length; i++){
@@ -35,12 +40,12 @@ VizCoocurrenceMatrix.prototype.draw = function( data )
 				if(data[i][j] == 1) c = 1;
 				else c=0
 				//document.write(data.length)
-				svg.append("rect")
-				.attr("x",1*j)
-				.attr("y",1*i)
+				this.svg.append("rect")
+				.attr("x",1*j+40)
+				.attr("y",1*i+40)
 				.attr("width",5)
 				.attr("height",5)
-				.attr("fill", colores_g[c] );	
+				.attr("fill", this.colores_g[c] );	
 			}
 		}
 
