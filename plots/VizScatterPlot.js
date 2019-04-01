@@ -23,7 +23,7 @@ function VizScatterPlot( divId )
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var x = d3.scale.linear()
-        .domain([-3, 3])
+        .domain([-3.382848731613455, 3.919199612620012])
         .range([0, width]);
 
     var y = d3.scale.linear()
@@ -95,7 +95,7 @@ l = []
 VizScatterPlot.prototype.draw = function( data )
 {
     var self = this;
-    console.log("---data---")
+    console.log("---data----------------------------------------------------------")
     console.log(data)
     this.m_svg.selectAll(".dot")
         .data(data)
@@ -104,8 +104,14 @@ VizScatterPlot.prototype.draw = function( data )
         //.attr("id",function(d,i) { return "dot_" + ( i + self.m_dirtyCount );}) // added
         //.attr("class", "dot")
         .attr("r", 3.5)
-        .attr("cx", function(d) { return self.m_x(d[0]); })
-        .attr("cy", function(d) { return self.m_y(d[1]); })
+        .attr("cx", function(d) { return d3.scale.linear()
+        .domain([d3.min(data, function(d) { return d[0]; }), d3.max(data, function(d) { return d[0]; })])
+        .range([0, 200])(d[0]); })
+        .attr("cy", function(d) { return d3.scale.linear()
+        .domain([d3.min(data, function(d) { return d[1]; }), d3.max(data, function(d) { return d[1]; })])
+        .range([200, 0])(d[1]); })
+        //.attr("cx", function(d) { return self.m_x(d[0]); })
+        //.attr("cy", function(d) { return self.m_y(d[1]); })
         .style("fill", 
                 function(d) {  
                     return self.m_colores_g[d[2] ]; 
