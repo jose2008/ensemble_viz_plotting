@@ -3,13 +3,13 @@
 function VizScatterPlot( divId )
 {
 	this.m_divId = divId;
-    var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    var margin = {top: 5, right: 20, bottom: 16, left: 40},
     width = 960 - margin.left - margin.right, 
     height = 500 - margin.top - margin.bottom;
 
 
     var width = 200;
-    var height = 200;
+    var height = 190;
     
     var container = this.m_divId;
     var xRange = 6;//xExtent[1] - xExtent[0];
@@ -34,7 +34,9 @@ function VizScatterPlot( divId )
     this.m_y = y;
 
     var color = d3.scale.category10();
-    var colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+    var colores_g = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"
+    ,"#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"
+    ,"#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
     var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom");
@@ -50,7 +52,7 @@ function VizScatterPlot( divId )
 
 
 
-    this.m_svg.append("g")
+ /*   this.m_svg.append("g")
         .attr( "class", "x axis" )
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
@@ -74,6 +76,7 @@ function VizScatterPlot( divId )
         .style("text-anchor", "end");
         //.text("Sepal Length (cm)")
 
+*/
 
 
         this.m_dirtyCount = 0;
@@ -94,22 +97,22 @@ l = []
 //VizScatterPlot.prototype.draw = function( data, labels ) 
 VizScatterPlot.prototype.draw = function( data )
 {
+    console.log("draw----------------------------------------------------------------------");
+    console.log(data);
     var self = this;
-    console.log("---data----------------------------------------------------------")
-    console.log(data)
     this.m_svg.selectAll(".dot")
         .data(data)
         .enter().append("circle")
         //.transition()
         //.attr("id",function(d,i) { return "dot_" + ( i + self.m_dirtyCount );}) // added
         //.attr("class", "dot")
-        .attr("r", 3.5)
+        .attr("r", 2.5)
         .attr("cx", function(d) { return d3.scale.linear()
         .domain([d3.min(data, function(d) { return d[0]; }), d3.max(data, function(d) { return d[0]; })])
         .range([0, 200])(d[0]); })
         .attr("cy", function(d) { return d3.scale.linear()
         .domain([d3.min(data, function(d) { return d[1]; }), d3.max(data, function(d) { return d[1]; })])
-        .range([200, 0])(d[1]); })
+        .range([190, 0])(d[1]); })
         //.attr("cx", function(d) { return self.m_x(d[0]); })
         //.attr("cy", function(d) { return self.m_y(d[1]); })
         .style("fill", 
@@ -117,8 +120,20 @@ VizScatterPlot.prototype.draw = function( data )
                     return self.m_colores_g[d[2] ]; 
                 });
 
-    self.m_dirtyCount += 10000;
-    //this.m_svg.call(lasso);
-    //lasso.items(d3.selectAll(".dot"));
+/*
+    this.m_svg.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")   
+        .attr("x", function(d) { return d3.scale.linear()
+        .domain([d3.min(data, function(d) { return d[0]; }), d3.max(data, function(d) { return d[0]; })])
+        .range([0, 200])(d[0]); })
+        .attr("y", function(d) { return d3.scale.linear()
+        .domain([d3.min(data, function(d) { return d[1]; }), d3.max(data, function(d) { return d[1]; })])
+        .range([200, 0])(d[1]); })
+        .text( function (d) { return "da"; })
+        ;
+*/    
+
 
 };

@@ -11,11 +11,6 @@ VizStreamGraph.prototype.draw = function(data2)
 {
 
 
-	console.log("VizStreamGraph------------------------------------------------------------------------values final");
-	console.log(APPLICATION_DATA['points']);
-	console.log(APPLICATION_DATA['draw']);
-
-
 
 
 	var self = this;
@@ -24,7 +19,6 @@ VizStreamGraph.prototype.draw = function(data2)
 	//this.m_divSVG.style.width ="200px";
 	//this.m_divSVG.style.height = "150px";
 	var id = "IDDivStream";
-	//console.log("id VizBarChart--------------------------------------------");
 	//console.log(id);
 	m_divSVG.id = id;
 	m_divSVG.style.background = "";
@@ -35,13 +29,11 @@ VizStreamGraph.prototype.draw = function(data2)
 	//var data = [ {"key":"m1","date":1,"value":"6860.0","point":0},{"key":"m2","date":1,"value":"5167.0","point":0},{"key":"m1","date":2,"value":"6860.0","point":0},{"key":"m2","date":2,"value":"5167.0","point":0}]
 	var data = [];
 	for(var i=0; i<	APPLICATION_DATA['points'].length;i++){
-		console.log("put data");
+		//console.log("put data");
 		data.push({"key":"silhouette","date":i, "value":APPLICATION_DATA["metrics"][i][0]});
-		data.push({"key":"inner","date":i, "value":APPLICATION_DATA["metrics"][i][1]});
-		data.push({"key":"outer","date":i, "value":APPLICATION_DATA["metrics"][i][2]});
+		data.push({"key":"SSE","date":i, "value":APPLICATION_DATA["metrics"][i][1]});
+		data.push({"key":"SSB","date":i, "value":APPLICATION_DATA["metrics"][i][2]});
 	}
-
-	console.log(data);
 
 
 var color = "orange";
@@ -236,8 +228,8 @@ var svg = d3.select(m_divSVG).append("svg")
 				        var id = "IDbarcharSVG".concat(self.m_name);
 				        if(document.getElementById(id)) document.getElementById(id).outerHTML = "";
 				        self.m_parent.getVizBarChart().draw( [{"metrica":"silhouette","valor":data['val3']},
-  														{"metrica":"inner","valor":data['val4']},
-  														{"metrica":"outer","valor":data['val5']}] );
+  														{"metrica":"SSE","valor":data['val4']},
+  														{"metrica":"SSB","valor":data['val5']}] );
 				        console.log("areas.............................")
 				        console.log(data["listWeight"]);
 				        self.m_parent.setCurrentLabels(data["list_labels"]);

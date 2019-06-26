@@ -42,29 +42,36 @@ function VizBar(parent, divId )
 
 
 
-VizBar.prototype.draw = function( params ) 
+VizBar.prototype.draw = function( params, params2 ) 
 {
 
 	
 
 	var self = this;
 	listWeight =  params['listWeight'];
+	console.log("entro checkinggg");
+	console.log(listWeight);
 	if(listWeight){
 		var toAdd = document.createDocumentFragment();
-		console.log(listWeight);
+		console.log("vizzzzzzzzzzzzzzzzzz bar");
+		console.log(APPLICATION_DATA_copy['modelContainers']);
 		while (self.m_divId.firstChild) {
+			console.log("entro al while");
     		self.m_divId.removeChild(self.m_divId.firstChild);
 		}
 
 		for(var i=0; i < listWeight.length; i++){
-		   container_bar = document.createElement('div');
+			console.log("for");
+		   var container_bar = document.createElement('div');
 			container_bar.className = "barWrapper";
 
 			span = document.createElement('span');
 			span.className = "progressText";
 			//var t = document.createTextNode(APPLICATION_DATA['modelContainers'][i].name);
-			var t = document.createTextNode( APPLICATION_DATA['modelContainers'][i].name.substring(0, APPLICATION_DATA['modelContainers'][i].name.length-7 ) );
-			bar = document.createElement('div');
+			console.log("vizzzzzzzzzzzzzzzzzz bar");
+		console.log(APPLICATION_DATA_copy['modelContainers'][i]);
+			var t = document.createTextNode( params2[i].name.substring(0, params2[i].name.length-7 ) );
+			var bar = document.createElement('div');
 			bar.className = "progress";
 			bar.style.height = "15px";
 			child = document.createElement('div');
@@ -73,6 +80,7 @@ VizBar.prototype.draw = function( params )
 			child.setAttribute("aria-valuenow", listWeight[i]*100); 
 			child.setAttribute("aria-valuemin", "0"); 
 			child.setAttribute("aria-valuemax", "100"); 
+			child.style.width = listWeight[i]*100 +   '%';
 			bar.appendChild(child);
 			container_bar.appendChild(t);
 			container_bar.appendChild(bar);
@@ -93,7 +101,7 @@ VizBar.prototype.draw = function( params )
 	
 
 
-
+/*
 	$(function () { 
   $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
 });  
@@ -104,5 +112,5 @@ VizBar.prototype.draw = function( params )
     each_bar_width = $(this).attr('aria-valuenow');
     $(this).width(each_bar_width + '%');
   });
-
+*/
 }
